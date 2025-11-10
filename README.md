@@ -13,9 +13,7 @@ El propósito es aplicar los principios de la Programación Orientada a Objetos 
 | **Lenguaje Principal** | Java | 11+ |
 | **IDE** | NetBeans | 20+ |
 
-## 3. 📂 Estructura del Repositorio
 
-*(Esta sección le muestra al docente que el código está organizado de manera lógica, cumpliendo con el requisito de estructura clara.)*
 
 ## 4. 🚀 Instrucciones de Ejecución (Paso a Paso)
 
