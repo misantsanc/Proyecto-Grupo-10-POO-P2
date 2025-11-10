@@ -1,0 +1,148 @@
+@startuml
+title Sistema de Liga Deportiva
+
+'=================== CLASE BASE ===================
+abstract class Persona {
+  - nombre: String
+  - edad: int
+  + Persona(nombre: String, edad: int)
+  + getNombre(): String
+  + setNombre(nombre: String): void
+  + getEdad(): int
+  + setEdad(edad: int): void
+  + toString(): String
+}
+
+'=================== SUBCLASES ===================
+class Jugador {
+  - posicion: String
+  - numero: int
+  - goles: int
+  - tarjetasAmarillas: int
+  - tarjetasRojas: int
+  - faltas: int
+  + Jugador(nombre: String, edad: int, posicion: String, numero: int)
+  + registrarGol(): void
+  + registrarTarjetaA(): void
+  + registrarTarjetaR(): void
+  + registrarFalta(): void
+  + toString(): String
+}
+
+class Entrenador {
+  - estrategia: String
+  + Entrenador(nombre: String, edad: int, estrategia: String)
+  + toString(): String
+}
+
+class Arbitro {
+  - aniosExp: int
+  - tipo: String
+  + Arbitro(nombre: String, edad: int, aniosExp: int, tipo: String)
+  + toString(): String
+}
+
+'=================== ENUM ===================
+enum EstadoPartido {
+  PENDIENTE
+  JUGADO
+}
+
+'=================== INTERFACES ===================
+interface Competible {
+  + competir(): void
+}
+
+interface Estadistico {
+  + generarEstadisticas(): void
+}
+
+'=================== CLASES PRINCIPALES ===================
+class Equipo {
+  - nombre: String
+  - ciudad: String
+  - jugadores: List<Jugador>
+  - entrenador: Entrenador
+  - puntos: int
+  - victorias: int
+  - empates: int
+  - derrotas: int
+  - golesFavor: int
+  - golesContra: int
+  + Equipo(nombre: String, ciudad: String, entrenador: Entrenador)
+  + agregarJugador(j: Jugador): void
+  + registrarPartido(gF: int, gC: int): void
+  + getNombre(): String
+  + toString(): String
+}
+
+class Estadio {
+  - nombre: String
+  - ciudad: String
+  - capacidad: int
+  + Estadio(nombre: String, ciudad: String, capacidad: int)
+  + getNombre(): String
+  + toString(): String
+}
+
+class Partido {
+  - equipoLocal: Equipo
+  - equipoVisitante: Equipo
+  - golesLocal: int
+  - golesVisitante: int
+  - arbitro: Arbitro
+  - estadio: Estadio
+  - estado: EstadoPartido
+  - fecha: LocalDate
+  - hora: LocalTime
+  + Partido(eLocal: Equipo, eVisitante: Equipo, arbitro: Arbitro, estadio: Estadio, fecha: LocalDate, hora: LocalTime)
+  + registrarResultado(gL: int, gV: int): void
+  + toString(): String
+}
+
+class Torneo {
+  - nombre: String
+  - equipos: List<Equipo>
+  - partidos: List<Partido>
+  + Torneo(nombre: String)
+  + agregarEquipo(e: Equipo): void
+  + generarPartidos(): void
+  + registrarResultado(p: Partido, gL: int, gV: int): void
+  + mostrarTabla(): void
+  + obtenerGoleador(): Jugador
+  + equipoMasVictorias(): Equipo
+  + listaPartidosJugados(): void
+  + listaPartidosPendientes(): void
+  + totalGolesTorneo(): int
+}
+
+class Liga {
+  - torneos: List<Torneo>
+  + Liga()
+  + agregarTorneo(t: Torneo): void
+  + mostrarReportes(): void
+}
+
+'=================== RELACIONES ===================
+Persona <|-- Jugador
+Persona <|-- Entrenador
+Persona <|-- Arbitro
+
+Jugador ..|> Estadistico
+Equipo ..|> Estadistico
+Equipo ..|> Competible
+
+Equipo "1" o-- "1" Entrenador
+Equipo "1" o-- "*" Jugador
+
+Partido "1" o-- "1" Equipo : equipoLocal
+Partido "1" o-- "1" Equipo : equipoVisitante
+Partido "1" o-- "1" Arbitro
+Partido "1" o-- "1" Estadio
+Partido --> EstadoPartido
+
+Torneo "1" o-- "*" Equipo
+Torneo "1" o-- "*" Partido
+
+Liga "1" o-- "*" Torneo
+@enduml
