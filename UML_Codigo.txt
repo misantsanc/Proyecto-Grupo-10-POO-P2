@@ -145,4 +145,5 @@ Torneo "1" o-- "*" Equipo
 Torneo "1" o-- "*" Partido
 
 Liga "1" o-- "*" Torneo
+
 @enduml
